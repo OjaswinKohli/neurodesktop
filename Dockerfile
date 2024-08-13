@@ -211,6 +211,7 @@ RUN /opt/conda/bin/pip install jupyter-server-proxy==4.2.0 \
     && /opt/conda/bin/pip install jupyterlab_rise \
     && /opt/conda/bin/pip install ipycanvas \
     && /opt/conda/bin/pip install jupyter_scheduler \
+    && /opt/conda/bin/pip install elyra \
     && rm -rf /home/${NB_USER}/.cache
 
 #========================================#
