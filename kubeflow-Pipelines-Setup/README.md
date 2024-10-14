@@ -147,14 +147,14 @@ The Neurodesktop container runs on the same machine as the Minikube cluster that
     ssh -L 9000:localhost:9000 user@linux-server-ip
     ``` 
 
-**Endpoints for Elyra if the Kubeflow Pipelines cluster and Neurodesktop are running on same linux machine**:
+**Endpoints for Elyra if the Kubeflow Pipelines cluster and Neurodesktop are running on the same linux machine**:
   - **Kubeflow Pipelines UI**: [http://localhost:31380](http://localhost:31380)
   - **Kubeflow Pipelines API**: [http://localhost:31380/pipeline](http://localhost:31380/pipeline)
   - **Minio Object Storage**: [http://minio-service.kubeflow.svc.cluster.local:9000](http://minio-service.kubeflow.svc.cluster.local:9000)
   - **Object Storage Username**: minio
   - **Object Storage Password**: minio123
 
-**Endpoints for Elyra if the Kubeflow Pipelines cluster and Neurodesktop are running on same WSL2 (Windows Subsystem for Linux) machine**:
+**Endpoints for Elyra if the Kubeflow Pipelines cluster and Neurodesktop are running on the same WSL2 (Windows Subsystem for Linux) machine**:
   - **Kubeflow Pipelines UI**: [http://host.docker.internal:31380](http://host.docker.internal:31380)
   - **Kubeflow Pipelines API**: [http://host.docker.internal:31380/pipeline](http://host.docker.internal:31380/pipeline)
   - **Minio Object Storage**: [http://host.docker.internal:9000](http://host.docker.internal:9000)
