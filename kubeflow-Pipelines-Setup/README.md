@@ -54,6 +54,7 @@ The Neurodesktop container runs on the same machine as the Minikube cluster that
 
 3. **Access Neurodesktop** \
   Once the script finishes, Neurodesktop will be accessible on port 8888. Open the link printed in the terminal using a web browser. \
+ \
   If you are running the Neurodesktop container on a Linux server and want to access it from your local computer's browser, forward your local port 8888 to the Linux server's port 8888 where the Neurodesktop container is running:
     ```bash
     ssh -L 8888:localhost:8888 user@linux-server-ip
