@@ -20,9 +20,10 @@ In this setup, Elyra is used to create and manage pipelines. Its Pipeline Visual
 
 The Neurodesktop container runs on the same machine as the Minikube cluster that hosts Kubeflow Pipelines. To ensure that Neurodesktop’s neuroimaging tools are available within the pipelines, CVMFS-CSI is used to expose the necessary modules and tools. A Persistent Volume Claim (PVC) is created within the cluster, allowing these resources to be accessed by the runtime image executing the Jupyter notebooks.
 
-## 2. Prerequistes
-- Minikube: Used to deploy Kubeflow Pipelines on a local Kubernetes cluster.
-- Docker: Required for running Neurodesktop.
+## 2. Prerequisites
+- Minikube (Used to deploy Kubeflow Pipelines on a local Kubernetes cluster).
+- Docker (Required for running Neurodesktop).
+- Processor should have x86 Architecture.
 
 ## 3. Setup Guide
 
@@ -45,7 +46,7 @@ The Neurodesktop container runs on the same machine as the Minikube cluster that
     ./build_and_run_on_linux.sh 
     ```
 
-   If you are using Windows Subsystem for Linux (WSL), run this script instead:
+   If you are using Windows Subsystem for Linux (WSL2), run this script instead:
     ```bash
     chmod +x ./build_and_run.sh 
     ./build_and_run.sh 
@@ -78,15 +79,32 @@ The Neurodesktop container runs on the same machine as the Minikube cluster that
     kubectl get all -n kubeflow
     ```
 
-4. **Setup PVC with Neurodesk's modules and containers using CVMFS-CSI** 
-    1.  Navigate to kubeflow-Pipelines-Setup from the root of the project directory:
+4. **Provision PVC for Neurodesk's Modules and Containers with CVMFS-CSI** 
+    1.  Navigate to the `kubeflow-Pipelines-Setup` directory from the root of the project:
         ```bash
         cd kubeflow-Pipelines-Setup
         ```
-    2. Setup the script to install cvmfs-csi drivers and create a PVC in the 'kubeflow' namespace:
+    2. Run the script to install CVMFS-CSI drivers and create a PVC in the kubeflow namespace:
         ```bash
         ./setup_cvmfs.sh
         ```
+    3. After the script in step 2 runs successfully, check if the CVMFS-CSI pods (named something like `cvmfs-csi-nodeplugin-` and `cvmfs-csi-controllerplugin-`) are running:
+
+        <img src="./pictures/picture2.png" alt="Picture 4" width="1000" height="500"/>
+
+    4. Check if the `cvmfs` PVC is available in the kubeflow namespace:
+        ```bash
+        kubectl get pvc -n kubeflow
+        ```
+        ![](./pictures/picture4.png)
+    5. SSH into the automount container in the cvmfs-csi-nodeplugin-***** pod. Once inside the shell, verify that the automount functionality is working by manually mounting the CVMFS repositories, which will trigger their automatic mount:
+        ```bash 
+        kubectl exec -it pod/cvmfs-csi-nodeplugin-***** -c automount -n kubeflow -- bin/sh
+        ```
+        ```bash
+        mount -t cvmfs neurodesk.ardc.edu.au /cvmfs/neurodesk.ardc.edu.au
+        ```
+        ![](./pictures/picture3.png)
 
 5. **Set Up Port Forwarding**:
     - For Kubeflow Pipelines UI:
@@ -126,15 +144,19 @@ The Neurodesktop container runs on the same machine as the Minikube cluster that
     If Kubeflow Pipelines are deployed on a Kubernetes cluster running on a Linux server and you want to access Minio Object Storage from your local computer’s browser, forward your local port 9000 to the Linux server's port 9000, where Minio is running:
     ```bash
     ssh -L 9000:localhost:9000 user@linux-server-ip
-    ```
+    ``` 
 
-**Final Kubeflow Pipelines Deployment with CVMFS PVC**:
-![](./pictures/picture1.png)
-  
-**Endpoints for Elyra**:
+**Endpoints for Elyra if the Kubeflow Pipelines cluster and Neurodesktop are running on same linux machine**:
   - **Kubeflow Pipelines UI**: [http://localhost:31380](http://localhost:31380)
   - **Kubeflow Pipelines API**: [http://localhost:31380/pipeline](http://localhost:31380/pipeline)
   - **Minio Object Storage**: [http://minio-service.kubeflow.svc.cluster.local:9000](http://minio-service.kubeflow.svc.cluster.local:9000)
+  - **Object Storage Username**: minio
+  - **Object Storage Password**: minio123
 
-
+**Endpoints for Elyra if the Kubeflow Pipelines cluster and Neurodesktop are running on same WSL2 (Windows Subsystem for Linux) machine**:
+  - **Kubeflow Pipelines UI**: [http://host.docker.internal:31380](http://host.docker.internal:31380)
+  - **Kubeflow Pipelines API**: [http://host.docker.internal:31380/pipeline](http://host.docker.internal:31380/pipeline)
+  - **Minio Object Storage**: [http://host.docker.internal:9000](http://host.docker.internal:9000)
+  - **Object Storage Username**: minio
+  - **Object Storage Password**: minio123
 
