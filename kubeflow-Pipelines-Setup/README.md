@@ -81,7 +81,7 @@ The Neurodesktop container runs on the same machine as the Minikube cluster that
     ```
 
 4. **Provision PVC for Neurodesk's Modules and Containers with CVMFS-CSI** 
-    1.  Navigate to the `kubeflow-Pipelines-Setup` directory from the root of the project:
+    1.  Navigate to the `kubeflow-Pipelines-Setup` directory from the root of the project repository:
         ```bash
         cd kubeflow-Pipelines-Setup
         ```
