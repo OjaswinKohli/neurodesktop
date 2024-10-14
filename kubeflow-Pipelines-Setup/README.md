@@ -65,7 +65,7 @@ The Neurodesktop container runs on the same machine as the Minikube cluster that
     minikube start --cpus=5 --memory=9216
     ```
 
-2. **Deploy Kubeflow Pipelines (v2.0.0)**:
+2. **Deploy Kubeflow Pipelines (v2.0.0)**
     ```bash
     export PIPELINE_VERSION=2.0.0
     kubectl apply -k "github.com/kubeflow/pipelines/manifests/kustomize/cluster-scoped-resources?ref=$PIPELINE_VERSION"
@@ -73,12 +73,22 @@ The Neurodesktop container runs on the same machine as the Minikube cluster that
     kubectl apply -k "github.com/kubeflow/pipelines/manifests/kustomize/env/dev?ref=$PIPELINE_VERSION"
     ```
 
-3. **Check Deployment Status**:
+3. **Check Deployment Status**
     ```bash
     kubectl get all -n kubeflow
     ```
 
-4. **Set Up Port Forwarding**:
+4. **Setup PVC with Neurodesk's modules and containers using CVMFS-CSI** 
+    1.  Navigate to kubeflow-Pipelines-Setup from the root of the project directory:
+        ```bash
+        cd kubeflow-Pipelines-Setup
+        ```
+    2. Setup the script to install cvmfs-csi drivers and create a PVC in the 'kubeflow' namespace:
+        ```bash
+        ./setup_cvmfs.sh
+        ```
+
+5. **Set Up Port Forwarding**:
     - For Kubeflow Pipelines UI:
       ```bash
       kubectl port-forward $(kubectl get pods -n kubeflow | grep ml-pipeline-ui | cut -d' ' -f1) 31380:3000 -n kubeflow &
@@ -88,12 +98,12 @@ The Neurodesktop container runs on the same machine as the Minikube cluster that
       kubectl port-forward $(kubectl get pods -n kubeflow | grep minio | cut -d' ' -f1) 9000:9000 -n kubeflow &
       ```
 
-5. **Update Hosts File**:
+6. **Update Hosts File**:
     ```bash
     echo '127.0.0.1  minio-service.kubeflow.svc.cluster.local' | sudo tee -a /etc/hosts
     ```
 
-6. **Access Kubeflow Pipelines UI**:
+7. **Access Kubeflow Pipelines UI**:
     Open the following link in your web browser to access the Kubeflow Pipelines UI:
     ```
     http://localhost:31380
@@ -103,7 +113,7 @@ The Neurodesktop container runs on the same machine as the Minikube cluster that
     ssh -L 31380:localhost:31380 user@linux-server-ip
     ```
 
-7. **Access Minio Object Storage**:
+8. **Access Minio Object Storage**:
     Open the following link in your web browser to access Minio Object Storage:
     ```
     http://localhost:9000
