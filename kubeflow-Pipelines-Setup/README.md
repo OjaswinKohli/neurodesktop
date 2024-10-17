@@ -109,6 +109,8 @@ The Neurodesktop container runs on the same machine as the Minikube cluster that
         ```
         ![](./pictures/picture3.png)
 
+      6. Exit the container by typing `exit` or `logout` in the terminal.
+
 5. **Set Up Port Forwarding**:
     - For Kubeflow Pipelines UI:
       ```bash
