@@ -9,7 +9,7 @@ This project integrates a batch workflow system into Neurodesktop, allowing user
       - [Neurodesktop Setup](#31-neurodesktop-setup)
       - [Kubeflow Pipelines Setup](#32-kubeflow-pipelines-setup)
       - [Elyra Setup for Running Pipelines on Kubeflow Pipelines](#33-elyra-setup-for-running-pipelines-on-kubeflow-pipelines)
-      - [References](#references)
+4. [References](#references)
 
 
 ## 1. Project Overview
