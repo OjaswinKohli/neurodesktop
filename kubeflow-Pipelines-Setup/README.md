@@ -69,7 +69,7 @@ The Neurodesktop container runs on the same machine as the Minikube cluster that
     minikube start --cpus=5 --memory=9216
     ```
 
-2. **Deploy Kubeflow Pipelines (v2.0.0)**
+2. **Deploy Kubeflow Pipelines (v2.0.0)** [1]
     ```bash
     export PIPELINE_VERSION=2.0.0
     kubectl apply -k "github.com/kubeflow/pipelines/manifests/kustomize/cluster-scoped-resources?ref=$PIPELINE_VERSION"
@@ -112,16 +112,16 @@ The Neurodesktop container runs on the same machine as the Minikube cluster that
       6. Exit the container by typing `exit` or `logout` in the terminal.
 
 5. **Set Up Port Forwarding**:
-    - For Kubeflow Pipelines UI:
+    - For Kubeflow Pipelines UI [1]:
       ```bash
       kubectl port-forward $(kubectl get pods -n kubeflow | grep ml-pipeline-ui | cut -d' ' -f1) 31380:3000 -n kubeflow &
       ```
-    - For Minio Object Storage:
+    - For Minio Object Storage [1]:
       ```bash
       kubectl port-forward $(kubectl get pods -n kubeflow | grep minio | cut -d' ' -f1) 9000:9000 -n kubeflow &
       ```
 
-6. **Update Hosts File**:
+6. **Update Hosts File** [1]:
     ```bash
     echo '127.0.0.1  minio-service.kubeflow.svc.cluster.local' | sudo tee -a /etc/hosts
     ```
